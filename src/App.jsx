@@ -1,35 +1,14 @@
-// import { UserProfile } from "./components/UserProfile";
-import { UserDetails } from "./components/UserDetails";
+import styles from "./components/style.module.css"
 
 export default function App() {
-  const mockUsers = [
-    {
-      id: 1,
-      username: "Mark",
-      email: "asdfghj@gmail.com",
-    },
-    {
-      id: 2,
-      username: "Jane",
-      email: "qwertyui@gmail.com",
-    },
-    {
-      id: 3,
-      username: "Mark",
-      email: "asdfghj@gmail.com",
-    },
-    {
-      id: 4,
-      username: "Jane",
-      email: "qwertyui@gmail.com",
-    },
-  ];
+  const isAuthenticated = true;
 
   return (
-    <>
-      {mockUsers.map((user) => {
-        return <UserDetails key={user.id} user={user} />;
-      })}
-    </>
+    <div>
+      <h1
+        className={isAuthenticated ? styles.test : undefined}
+        style={{ color: isAuthenticated ? "green" : "red" }}
+      >{isAuthenticated ? "Welcome, User!" :"You are not logged in." }</h1>
+    </div>
   );
 }
