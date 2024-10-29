@@ -1,14 +1,25 @@
-import RegisterForm from "./components/RegisterForm";
+import { useState } from "react";
+import { UserDetails } from "./components/UserDetails";
 
 export default function App() {
-  window.addEventListener("resize", (event) => {
-    console.log(`window's width: ${window.innerWidth}px.`);
-    console.log(`window's height: ${window.innerHeight}px.`);
-  });
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      username: "mark",
+      email: "mark@gmail.com",
+    },
+    {
+      id: 2,
+      username: "mike",
+      email: "mike@gmail.com",
+    },
+  ]);
 
   return (
     <div>
-      <RegisterForm />
+      {users.map((user) => (
+        <UserDetails key={user.id} user={user} setUsers={setUsers} />
+      ))}
     </div>
   );
 }
