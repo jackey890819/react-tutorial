@@ -1,74 +1,36 @@
-import { useState } from "react";
-import { UserDetails } from "./components/UserDetails";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const [addUserForm, setAddUserForm] = useState({
-    username: "",
-    email: "",
+  const [counter, setCounter] = useState(0);
+  const [sync, setSync] = useState({
+    value: 0,
   });
-  const [counter, setCounter] = useState(2);
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "mark",
-      email: "mark@gmail.com",
-    },
-    {
-      id: 2,
-      username: "mike",
-      email: "mike@gmail.com",
-    },
-  ]);
+
+  useEffect(() => {
+    console.log("Rendering...");
+    document.title = "React Tutorial " + counter;
+    return () => {
+      console.log("cleaning...");
+    };
+  }, [sync, counter]);
+
+  function doSync() {
+    console.log(sync);
+    setSync((current) => ({ ...current, value: current.value + 1 }));
+    console.log(sync);
+  }
 
   return (
     <div>
-      <div>
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          // console.log(`${addUserForm.username} ${addUserForm.email}`);
-          const nuwUser = {
-            id: counter + 1,
-            username: addUserForm.username,
-            email: addUserForm.email,
-          };
-          setUsers((prev) => [...prev, nuwUser]);
-          setCounter(counter + 1);
-        }}>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              value={addUserForm.username}
-              onChange={(e) => {
-                setAddUserForm((prev) => ({
-                  ...prev,
-                  username: e.target.value,
-                }));
-              }}
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              value={addUserForm.email}
-              onChange={(e) => {
-                setAddUserForm((prev) => ({
-                  ...prev,
-                  email: e.target.value,
-                }));
-              }}
-            />
-          </div>
-          <button>Add User</button>
-        </form>
-      </div>
-      <br />
-      {users.map((user) => (
-        <UserDetails key={user.id} user={user} setUsers={setUsers} />
-      ))}
+      <div>You clicked the button {counter} times</div>
+      <button
+        onClick={() => {
+          setCounter((prev) => prev + 1);
+        }}
+      >
+        Click Me
+      </button>
+      <button onClick={() => doSync()}>Sync</button>
     </div>
   );
 }
